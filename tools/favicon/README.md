@@ -4,22 +4,34 @@ A robust tool for generating a complete set of web-ready favicon assets from a s
 
 ## 🚀 Usage
 
-The easiest way to run the Favicon generator is via the provided bootstrap script, which automatically manages the Python virtual environment for you.
+The Favicon generator is a self-contained Python script powered by **`uv`**. It automatically manages its own dependencies (Pillow) and Python version (>= 3.14).
 
+### Running the Tool
+From the tool directory:
+```bash
+./generator.py [source] [output_dir] [options]
+```
+
+From the project root:
+```bash
+uv run tools/favicon/generator.py [source] [output_dir] [options]
+```
+
+### Examples
 ```bash
 # Basic usage (auto-detects favicon.png or logo.png)
-./generate.sh
+./generator.py
 
 # Specify source and output directory
-./generate.sh my-logo.png ./static
+./generator.py my-logo.png ./static
 
 # Output as JSON for agent integration
-./generate.sh --json --yes my-logo.png ./dist
+./generator.py my-logo.png ./dist --json --yes
 ```
 
 ## ⚙️ How it Works
 
-1.  **Bootstrap**: `generate.sh` checks for Python 3.14 and sets up a local `.venv` if it doesn't exist.
+1.  **Engine**: [uv](https://docs.astral.sh/uv/) (Zero-config execution).
 2.  **Generation**: The core logic in `generator.py` uses **Pillow** to perform high-quality resizing (LANCZOS).
 3.  **Assets**: It generates:
     - `favicon-16x16.png`
@@ -31,5 +43,5 @@ The easiest way to run the Favicon generator is via the provided bootstrap scrip
 
 ## 📋 Requirements
 
-- **macOS** (Optimized for Apple Silicon, though Python-based, it follows the project's macOS-first standards).
-- **Python 3.14** (Required for the virtual environment).
+- **uv**: Required for execution.
+- **Python 3.14+**: Automatically managed and downloaded by `uv` if needed.

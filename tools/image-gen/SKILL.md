@@ -1,5 +1,5 @@
 ---
-name: generate_images
+name: image-gen
 description: Generate images using Gemini/Imagen with an optional vision-based critique loop.
 ---
 

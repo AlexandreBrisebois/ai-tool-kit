@@ -1,4 +1,12 @@
-#!/usr/bin/env python3
+#! /usr/bin/env -S uv run
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "pyyaml",
+#     "python-dotenv",
+#     "requests",
+# ]
+# ///
 """
 🛠️ AI Tool Kit: Gemini Image Generator
 =====================================
@@ -16,12 +24,9 @@ import urllib.request
 import urllib.error
 from typing import Optional, Dict, Any
 
-# Load .env if present
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
+from dotenv import load_dotenv
+
+load_dotenv()
 
 API_KEY = os.getenv("GOOGLE_API_KEY")
 

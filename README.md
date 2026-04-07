@@ -48,34 +48,39 @@ Each tool is "bundled" with its own **`SKILL.md`** and **`tool-spec.json`**, all
 | :--- | :--- | :--- | :--- |
 | **[Favicon Gen](./tools/favicon)** | Generate a complete web-ready favicon set from a single image. | 🚧 In Progress | [Link](./tools/favicon/SKILL.md) |
 | **[Image Gen](./tools/image-gen)** | Gemini 3.1 Pro powered image generation with a vision critique loop. | 🚧 In Progress | [Link](./tools/image-gen/SKILL.md) |
-| **[MLX-LM Manager](./tools/mlx-lm)** | Download and manage local LLMs on Apple Silicon via MLX. | 🚧 In Progress | [Link](./tools/mlx-lm/SKILL.md) |
 
 ## 📦 Getting Started
 
-This repository uses a **decentralized configuration** model. Each tool manages its own dependencies and environment.
+This repository uses a **zero-config execution model** powered by **`uv`**. Each tool manages its own dependencies and Python version (>= 3.14) automatically.
 
-1. **Clone the repository**:
+1. **Install `uv`**:
+   If you don't have it, install it via Homebrew:
+   ```bash
+   brew install uv
+   ```
+
+2. **Clone the repository**:
    ```bash
    git clone https://github.com/AlexandreBrisebois/ai-tool-kit.git
    cd ai-tool-kit
    ```
 
-2. **Choose a tool**:
-   Navigate to the tool's directory in `tools/`.
+3. **Choose a tool**:
+   Navigate to a tool's directory in `tools/`.
    ```bash
-   cd tools/mlx-lm
+   cd tools/image-gen
    ```
 
-3. **Configure Environment**:
+4. **Configure Environment**:
    If the tool requires an API key or custom paths, copy its local `.env.example` to `.env`.
    ```bash
    cp .env.example .env
    ```
 
-4. **Run the Bootstrap Script**:
-   Most tools provide a `.sh` bootstrap script that automatically manages virtual environments and dependencies.
+5. **Run the Tool**:
+   All tools are executable and will handle their own setup on the first run.
    ```bash
-   ./mlx-lm.sh --help
+   ./generator.py --help
    ```
 
 ## 🏗️ Building New Tools

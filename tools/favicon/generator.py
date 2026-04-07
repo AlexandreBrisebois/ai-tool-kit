@@ -1,4 +1,11 @@
-#!/usr/bin/env python3
+#! /usr/bin/env -S uv run
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "Pillow",
+#     "python-dotenv",
+# ]
+# ///
 """
 🎨 AI Tool Kit: Favicon Generator
 ================================
@@ -13,14 +20,10 @@ import sys
 from pathlib import Path
 from typing import List, Optional, Dict, Any
 
-try:
-    from PIL import Image
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    # This will be handled by the bootstrap script, but for CLI usage:
-    print("[ERROR] Missing dependencies. Run through generate.sh or install Pillow and python-dotenv.")
-    sys.exit(1)
+from PIL import Image
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # --- Configuration ---
 S_16 = (16, 16)
