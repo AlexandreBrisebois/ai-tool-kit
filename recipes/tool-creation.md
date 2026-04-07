@@ -18,19 +18,20 @@ Every tool *must* adhere to these 5 constraints:
 4. **Environment First**: Secrets MUST be pulled from `.env` or system variables.
 5. **Atomic**: One tool, one specific job. Pipe-friendly output.
 
-## 3. Tool Directory Structure
-Each tool implementation resides in `tools/tool-name/`.
+## 3. Bundled Tool Structure
+Each tool implementation resides in `tools/tool-name/` and includes its own skill definition.
 ```text
 tools/tool-name/
 ├── main.py or tool.sh    # Main executable
+├── SKILL.md              # Reasoning instructions (with YAML frontmatter)
+├── tool-spec.json        # Structured JSON spec for agent tool-calling
 ├── requirements.txt      # Dependencies (if Python)
 └── README.md             # Usage guide and agent notes
 ```
 
-## 4. Universal Skill Creation
-Create a skill in `skills/tool-name/` to help agents use the tool:
-- **`skill.md`**: Reasoning instructions, prompting strategy.
-- **`tool-spec.json`**: Structured JSON spec (OpenAI/OpenAPI style) for tool calling.
+## 4. Universal Skill Standards
+- **`SKILL.md`**: Must start with YAML frontmatter (`name`, `description`). Use relative paths (e.g., `./tool.sh`) for interaction.
+- **`tool-spec.json`**: Follow the OpenAI/OpenAPI function calling schema.
 
 ## 5. Verification
 Every tool must be tested with:

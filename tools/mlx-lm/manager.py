@@ -33,11 +33,18 @@ def get_installed_models() -> List[str]:
     return [d.name for d in DEFAULT_MODELS_DIR.iterdir() if d.is_dir()]
 
 def download_model(model_id: str):
-    """Download a model from HuggingFace using mlx-lm library."""
-    # We use subprocess to call the CLI version for easier progress tracking
-    cmd = [sys.executable, "-m", "mlx_lm.server", "--model", model_id, "--dry-run"] # Dry run just downloads
-    print(f"[INFO] Downloading {model_id}...")
-    subprocess.run(cmd)
+    """Download a model from HuggingFace."""
+    try:
+        from huggingface_hub import snapshot_download
+    except ImportError:
+        print("[ERROR] huggingface_hub not found. Please run ./mlx-lm.sh to install dependencies.")
+        return
+
+    print(f"[INFO] Downloading {model_id} to {DEFAULT_MODELS_DIR}...")
+    # download to the local models directory
+    local_dir = DEFAULT_MODELS_DIR / model_id.split("/")[-1]
+    snapshot_download(repo_id=model_id, local_dir=local_dir)
+    print(f"[SUCCESS] Downloaded {model_id} to {local_dir}")
 
 def start_server(model_path: str, port: int = 8080):
     """Start the MLX-LM server."""

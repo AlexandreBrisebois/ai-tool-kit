@@ -51,27 +51,48 @@ backup_file() {
 
 # --- Gemini Logic ---
 install_gemini() {
-    echo "🔄 Syncing Gemini / Antigravity..."
-    check_jq
-    mkdir -p "$(dirname "$GEMINI_CONFIG")"
-    if [[ ! -f "$GEMINI_CONFIG" ]]; then echo "{}" > "$GEMINI_CONFIG"; fi
-    backup_file "$GEMINI_CONFIG"
+    echo "🔄 Syncing Gemini / Antigravity via official CLI..."
+    
+    # 1. Link individual tools
+    for tool_dir in "${PROJECT_PATH}/tools"/*; do
+        if [[ -d "$tool_dir" && -f "$tool_dir/SKILL.md" ]]; then
+            echo "  Linking $(basename "$tool_dir")..."
+            gemini skills link "$tool_dir" --consent > /dev/null
+        fi
+    done
 
-    # Add paths to skills.paths and ensure uniqueness
-    tmp_file=$(mktemp)
-    jq --arg skills "$SKILLS_PATH" --arg anti "$ANTI_PATH" \
-       '.skills.paths = ((.skills.paths // []) + [$skills, $anti] | unique)' \
-       "$GEMINI_CONFIG" > "$tmp_file" && mv "$tmp_file" "$GEMINI_CONFIG"
-    echo "✅ Gemini configuration updated."
+    # 2. Link antigravity directory (for custom/private skills)
+    if [[ -d "$ANTI_PATH" ]]; then
+        echo "  Linking antigravity directory..."
+        gemini skills link "$ANTI_PATH" --consent > /dev/null
+    fi
+
+    # 3. Legacy Cleanup: Remove the parent 'skills' folder from settings.json if it exists
+    # (The new bundled approach links individual tool folders instead)
+    if [[ -f "$GEMINI_CONFIG" ]]; then
+        tmp_file=$(mktemp)
+        jq --arg skills "$SKILLS_PATH" \
+           '.skills.paths |= map(select(. != $skills))' \
+           "$GEMINI_CONFIG" > "$tmp_file" && mv "$tmp_file" "$GEMINI_CONFIG"
+    fi
+
+    echo "✅ Gemini skills linked successfully."
 }
 
 uninstall_gemini() {
-    echo "🗑️ Removing Gemini / Antigravity sync..."
-    check_jq
+    echo "🗑️ Unlinking Gemini / Antigravity skills..."
+    
+    # Unlink individual tools by path (or name if known, but link works with path)
+    # Note: 'gemini skills uninstall' takes a name. 
+    # For simplicity in this script, we can clean up the settings.json entries 
+    # that 'link' creates if it uses the same mechanism.
+    # However, 'gemini skills link' actually adds to the same 'paths' array.
+    
     if [[ -f "$GEMINI_CONFIG" ]]; then
         tmp_file=$(mktemp)
-        jq --arg skills "$SKILLS_PATH" --arg anti "$ANTI_PATH" \
-           '.skills.paths |= map(select(. != $skills and . != $anti))' \
+        # Remove all paths that start with our project path
+        jq --arg project "$PROJECT_PATH" \
+           '.skills.paths |= map(select(startswith($project) | not))' \
            "$GEMINI_CONFIG" > "$tmp_file" && mv "$tmp_file" "$GEMINI_CONFIG"
         echo "✅ Gemini configuration cleaned."
     fi

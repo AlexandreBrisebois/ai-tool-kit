@@ -33,22 +33,22 @@ Run the following command to add project-local skill paths to your global AI too
 
 | Tool | Sync Method | Local Path | Description |
 | :--- | :--- | :--- | :--- |
-| **Gemini / Antigravity** | `~/.gemini/settings.json` | `./skills/`, `./antigravity/` | Links skill directories to Gemini's global config. |
+| **Gemini / Antigravity** | `gemini skills link` | `./tools/*` | Links each tool directory as a skill. |
 | **Claude Code** | `.clauderc` | `./claude/` | Native project-root discovery. |
-| **GitHub Copilot CLI** | `copilot-instructions.md` | `./skills/` | Adds repo-level instructions for Copilot. |
+| **GitHub Copilot CLI** | `copilot-instructions.md` | `./tools/*` | Adds repo-level instructions for Copilot. |
 
 ### 2. Manual VS Code Setup
-For **VS Code**, programmatic updates to `settings.json` are brittle. Please manually add the absolute path of the `skills/` directory to your VS Code settings if your AI extension supports custom instruction paths.
+For **VS Code**, programmatic updates to `settings.json` are brittle. Please manually add the absolute path of the `tools/` directory to your VS Code settings if your AI extension supports custom instruction paths.
 
 ## 🛠️ Tools & Skills
 
-Each tool includes a corresponding "Skill" that allows AI agents to understand and execute it effectively.
+Each tool is "bundled" with its own **`SKILL.md`** and **`tool-spec.json`**, allowing AI agents to understand and execute it directly from the tool's directory.
 
 | Tool | Description | Status | Agent Skill |
 | :--- | :--- | :--- | :--- |
-| **[Favicon Gen](./tools/favicon)** | Generate a complete web-ready favicon set from a single image. | 🚧 In Progress | [Link](./skills/favicon/skill.md) |
-| **[Image Gen](./tools/image-gen)** | Gemini 3.1 Pro powered image generation with a vision critique loop. | 🚧 In Progress | [Link](./skills/image-gen/skill.md) |
-| **[MLX-LM Manager](./tools/mlx-lm)** | Download and manage local LLMs on Apple Silicon via MLX. | 🚧 In Progress | [Link](./skills/mlx-lm/skill.md) |
+| **[Favicon Gen](./tools/favicon)** | Generate a complete web-ready favicon set from a single image. | 🚧 In Progress | [Link](./tools/favicon/SKILL.md) |
+| **[Image Gen](./tools/image-gen)** | Gemini 3.1 Pro powered image generation with a vision critique loop. | 🚧 In Progress | [Link](./tools/image-gen/SKILL.md) |
+| **[MLX-LM Manager](./tools/mlx-lm)** | Download and manage local LLMs on Apple Silicon via MLX. | 🚧 In Progress | [Link](./tools/mlx-lm/SKILL.md) |
 
 ## 📦 Getting Started
 
