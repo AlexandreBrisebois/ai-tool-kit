@@ -1,0 +1,20 @@
+# Secrets
+.env
+*.key
+*.token
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tools
+tools/*/output/
+tools/*/temp/
+tools/*/models/

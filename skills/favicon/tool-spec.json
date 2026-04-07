@@ -1,0 +1,28 @@
+{
+  "name": "generate_favicons",
+  "description": "Generate a full suite of web-ready favicons from a high-resolution source image.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "source": {
+        "type": "string",
+        "description": "Path to the source high-resolution PNG image."
+      },
+      "output_dir": {
+        "type": "string",
+        "description": "Destination directory for generated icons (e.g. 'static')."
+      },
+      "auto_yes": {
+        "type": "boolean",
+        "description": "Automatically create the output directory if it doesn't exist.",
+        "default": true
+      },
+      "json": {
+        "type": "boolean",
+        "description": "Return output as a JSON object.",
+        "default": true
+      }
+    },
+    "required": ["source", "output_dir"]
+  }
+}

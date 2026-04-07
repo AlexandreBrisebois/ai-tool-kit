@@ -1,0 +1,29 @@
+{
+  "name": "mlx_lm_manager",
+  "description": "Manage local LLMs on Apple Silicon (download, start server, stop, list).",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": {
+        "type": "string",
+        "enum": ["download", "start", "stop", "list"],
+        "description": "The management command to run."
+      },
+      "model_id_or_path": {
+        "type": "string",
+        "description": "HuggingFace repo ID or local path (required for download/start)."
+      },
+      "port": {
+        "type": "integer",
+        "description": "Port for the OpenAI-compatible server.",
+        "default": 8080
+      },
+      "json": {
+        "type": "boolean",
+        "description": "Output machine-readable JSON status.",
+        "default": true
+      }
+    },
+    "required": ["command"]
+  }
+}
