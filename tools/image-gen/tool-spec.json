@@ -1,0 +1,38 @@
+{
+  "name": "generate_image",
+  "description": "Generate images using Gemini/Imagen with an optional vision-based critique loop for quality assurance.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "prompt_or_file": {
+        "type": "string",
+        "description": "The text prompt for image generation or a path to a markdown file containing an 'image_prompt' frontmatter field."
+      },
+      "output": {
+        "type": "string",
+        "description": "The destination path for the generated image (e.g. 'output/hero.webp').",
+        "default": "output/generated.webp"
+      },
+      "critique": {
+        "type": "string",
+        "description": "Specific critique instructions or a path to a critique file. If omitted, the tool uses default quality checks or a local 'critique.md'."
+      },
+      "no_critique": {
+        "type": "boolean",
+        "description": "If true, skips the vision-based critique loop and saves the first result immediately.",
+        "default": false
+      },
+      "force": {
+        "type": "boolean",
+        "description": "If true, overwrites existing files at the output path without erroring.",
+        "default": false
+      },
+      "json": {
+        "type": "boolean",
+        "description": "Return output as a JSON object.",
+        "default": true
+      }
+    },
+    "required": ["prompt_or_file"]
+  }
+}
